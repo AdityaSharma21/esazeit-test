@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="demoModelStoreContainer" CdmEntityContainer="demoEntities">
+    <EntitySetMapping Name="mst_student">
+      <EntityTypeMapping TypeName="demoModel.mst_student">
+        <MappingFragment StoreEntitySet="mst_student">
+          <ScalarProperty Name="student_id" ColumnName="student_id" />
+          <ScalarProperty Name="student_name" ColumnName="student_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mst_subjectmarks">
+      <EntityTypeMapping TypeName="demoModel.mst_subjectmarks">
+        <MappingFragment StoreEntitySet="mst_subjectmarks">
+          <ScalarProperty Name="marks" ColumnName="marks" />
+          <ScalarProperty Name="subject_name" ColumnName="subject_name" />
+          <ScalarProperty Name="student_id" ColumnName="student_id" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

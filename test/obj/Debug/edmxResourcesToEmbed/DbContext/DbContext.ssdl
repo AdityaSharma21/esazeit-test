@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="demoModelStoreContainer">
+    <EntitySet Name="mst_student" EntityType="demoModel.Store.mst_student" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="mst_subjectmarks" EntityType="demoModel.Store.mst_subjectmarks" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_mst_subjectmarks_mst_student" Association="demoModel.Store.FK_mst_subjectmarks_mst_student">
+      <End Role="mst_student" EntitySet="mst_student" />
+      <End Role="mst_subjectmarks" EntitySet="mst_subjectmarks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="mst_student">
+    <Key>
+      <PropertyRef Name="student_id" />
+    </Key>
+    <Property Name="student_id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="student_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="mst_subjectmarks">
+    <Key>
+      <PropertyRef Name="subject_id" />
+    </Key>
+    <Property Name="subject_id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="student_id" Type="bigint" Nullable="false" />
+    <Property Name="subject_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="marks" Type="numeric" Nullable="false" Precision="10" Scale="2" />
+  </EntityType>
+  <Association Name="FK_mst_subjectmarks_mst_student">
+    <End Role="mst_student" Type="demoModel.Store.mst_student" Multiplicity="1" />
+    <End Role="mst_subjectmarks" Type="demoModel.Store.mst_subjectmarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mst_student">
+        <PropertyRef Name="student_id" />
+      </Principal>
+      <Dependent Role="mst_subjectmarks">
+        <PropertyRef Name="student_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

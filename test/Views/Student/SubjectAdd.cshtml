@@ -1,0 +1,46 @@
+﻿@model test.DbContext.mst_subjectmarks
+
+@{
+    ViewBag.Title = "Add Subject";
+}
+
+<h2>SubjectAdd</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>mst_subjectmarks</legend>
+        @Html.HiddenFor(model => model.subject_id)
+        @Html.HiddenFor(model => model.student_id)
+        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.subject_name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.subject_name)
+            @Html.ValidationMessageFor(model => model.subject_name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.marks)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.marks)
+            @Html.ValidationMessageFor(model => model.marks)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "studentlist")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

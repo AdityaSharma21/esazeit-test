@@ -1,0 +1,87 @@
+﻿@using test.Models
+@model IEnumerable<StudentData>
+
+@{
+    ViewBag.Title = "studentlist";
+}
+<div class="col-md-12">
+    
+    <div class="col-md-6">
+<h2>studentlist</h2>
+<p>
+    @Html.ActionLink("Create New", "Add")
+</p>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.student_name)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td class="view-subject" data-id="@item.student_id">
+                @Html.DisplayFor(modelItem => item.student_name)
+            </td>
+            <td>
+                
+                @Html.ActionLink("Delete", "Delete", new { id=item.student_id }) |
+                @Html.ActionLink("Edit", "Update", new { id=item.student_id }) |
+                @Html.ActionLink("Add Subject Details", "SubjectAdd", new { id=item.student_id }) 
+                 
+            </td>
+        </tr>
+    }
+
+    </table>
+        </div>
+    <div class="col-md-6 subject-details">
+
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+
+<script>
+    $(document).on('click', '.view-subject', function () {
+        $(".subject-details").empty();
+        var student_id = $(this).data('id');
+        var req = {};
+        req["student_id"] = student_id;
+        $.ajax({
+            url: "@Url.Action("getstudentsubjectdetails","Student")",
+            data: { data: JSON.stringify(req) },
+            cache: false,
+            type: "Get",
+            async: false,
+            success: function (response)
+            {
+                debugger
+                if (response.status === true)
+                {
+                    if (response.data.length > 0)
+                    {
+                        $(".subject-details").empty().append("<div><h2>Subject list</h2><table><thead><tr><th>Subject Name</th><th>Marks</th><th></th></tr></thead><tbody class='subject-data'></tbody></table></div>");
+                        $.each(response.data, function (item, value) {
+                            $(".subject-data").append("<tr><td> " + value.subject_name + " </td><td>" + value.marks + "</td><td><a href='/Student/SubjectDelete/" + value.subject_id + "'>Delete</a> | <a href='/Student/SubjectEdit/" + value.subject_id + "'>Update</a> | <a href='/Student/SubjectAdd'>Add Subject Details</a></td></tr>");
+                        });
+                    }
+                }
+            },
+            error: function (response) {
+
+            }
+        });
+
+
+
+
+
+    });
+</script>
+
+
+
+
+

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="demoModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="demoEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="mst_student" EntityType="demoModel.mst_student" />
+    <EntitySet Name="mst_subjectmarks" EntityType="demoModel.mst_subjectmarks" />
+    <AssociationSet Name="FK_mst_subjectmarks_mst_student" Association="demoModel.FK_mst_subjectmarks_mst_student">
+      <End Role="mst_student" EntitySet="mst_student" />
+      <End Role="mst_subjectmarks" EntitySet="mst_subjectmarks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="mst_student">
+    <Key>
+      <PropertyRef Name="student_id" />
+    </Key>
+    <Property Name="student_id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="student_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="mst_subjectmarks" Relationship="demoModel.FK_mst_subjectmarks_mst_student" FromRole="mst_student" ToRole="mst_subjectmarks" />
+  </EntityType>
+  <EntityType Name="mst_subjectmarks">
+    <Key>
+      <PropertyRef Name="subject_id" />
+    </Key>
+    <Property Type="Int64" Name="subject_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="student_id" Nullable="false" />
+    <Property Type="String" Name="subject_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Decimal" Name="marks" Nullable="false" Precision="10" Scale="2" />
+    <NavigationProperty Name="mst_student" Relationship="demoModel.FK_mst_subjectmarks_mst_student" FromRole="mst_subjectmarks" ToRole="mst_student" />
+  </EntityType>
+  <Association Name="FK_mst_subjectmarks_mst_student">
+    <End Type="demoModel.mst_student" Role="mst_student" Multiplicity="1" />
+    <End Type="demoModel.mst_subjectmarks" Role="mst_subjectmarks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="mst_student">
+        <PropertyRef Name="student_id" />
+      </Principal>
+      <Dependent Role="mst_subjectmarks">
+        <PropertyRef Name="student_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
